@@ -1,5 +1,10 @@
-#Analyzing population genomic data with ANGSD
+# Analyzing population genomic data with ANGSD  
 This repository contains practical training material as part of the ACE bioinformatics program. This lesson focuses on exploring Hardy-Weinberg Equilibrium and perform population structure inference and assignment from Next-Generation Sequencing data.
+
+---
+author: "David B. Stern, Ph.D."
+email: david.stern@nih.gov
+---
 
 This tutorial uses the following software  
 * [ANGSD](http://www.popgen.dk/angsd/index.php/ANGSD)
@@ -14,13 +19,13 @@ The data are from the [1000 Genomes Project](https://www.internationalgenome.org
 
 ### connect to ACE HPC and start an interactive session
 ```bash
-ssh dstern@biocompace.ace.ac.ug
+ssh <username>@biocompace.ace.ac.ug
 srun --pty bash
 
 #load the ANGSD module
 
 ```
-## Process data
+### Process data
 Copy the data from the shared directory to your directory.  
 ```bash
 mkdir angsd_tutorial #make a working directory
@@ -37,17 +42,19 @@ samtools view bamfiles/smallNA06994.mapped.ILLUMINA.bwa.CEU.low_coverage.2012052
 ```
 
 Make a list with the bam file names
-`ls -1 bamfiles/*.bam > bamfiles.txt`
+`ls -1 bamfiles/*.bam > bamfiles.txt`  
 create a population information file for later
 ```bash
 paste -d " " <( cut -f 5 -d"." bamfiles.txt ) <(cut -f 1 -d"." bamfiles.txt | xargs -n1 basename) > bamfiles.popinfo.txt
 ```
 
-##Simulatenously detect SNPs, calculate genotype likelihoods, and test for HWE
+### Simulatenously detect SNPs, calculate genotype likelihoods, and test for HWE  
+
 ```bash
 ## analyze all 30 individuals from 3 populations
 angsd -bam bamfiles.txt -doHWE 1 -domajorminor 1 -GL 2 -doGlf 2 -doMaf 1 -SNP_pval 2e-6 -minMapQ 30 -minQ 20 -minInd 25 -minMaf 0.05 -out bamfiles
 ```
+
 While that is running, let's look at the command flags
 ```bash
 -bam bamfiles.txt: tell ANGSD the locations of the bam files to process
@@ -63,7 +70,8 @@ While that is running, let's look at the command flags
 -minMaf 0.05: Only consider SNPs with a minor allele frequency of 0.05
 -out bamfiles: The prefix for output files (e.g. bamfiles.beagle.gz)
 ```
-###Inspect the output files
+
+### Inspect the output files
 ```bash
 #view first few rows
 gunzip -c bamfiles.hwe.gz | head
@@ -75,7 +83,7 @@ gunzip -c bamfiles.hwe.gz | awk '{if($9<0.05) total+=1}END{print total}'
 What proportion of sites are not in Hardy-Weinberg Equilibrium?  
 Does that mean all the other sites are in HWE?  
 
-###Let's run the same test with 10 individuals from one of the 3 sites
+### Let's run the same test with 10 individuals from one of the 3 sites
 ```bash
 #make a like of bam files for JPT individuals
 ls -1 bamfiles/*JPT*.bam > JPT.files
@@ -85,7 +93,7 @@ gunzip -c JPT.HWE.hwe.gz | awk '{if($9<0.05) total+=1}END{print total}'
 ```
 What proportion of sites are not in Hardy-Weinberg Equilibrium?
 
-###View the genotype likelihood file
+### View the genotype likelihood file
 ```bash
 gunzip -c bamfiles.beagle.gz | head -n 10 | cut -f 1-10 | column -t
 ```
@@ -97,14 +105,17 @@ Explanation of the beagle genotype likelihood file
         - Homozygous major (A/A), Heterozygous (A/B), Homozygous minor (B/B)
 ```
 
-##Plot genotype vs allele frequencies along with the HWE expectations
-###Adapted from https://gcbias.org/2011/10/13/population-genetics-course-resources-hardy-weinberg-eq/
+## Plot genotype vs allele frequencies along with the HWE expectations  
+### Adapted from:  
+ https://gcbias.org/2011/10/13/population-genetics-course-resources-hardy-weinberg-eq/
 
-**Collect the beagle genotype likelihood file we generated in the above exercise:**
-Box link:
+**Collect the beagle genotype likelihood file we generated in the above exercise:**  
+Box link:  
 https://nih.box.com/s/e74fmhl38p379ykj8dqn2ynqe44j3ydb
 
 File name: `bamfiles.beagle.gz`
+
+Open RStudio, set the working directory to the directory with the `bamfiles.beagle.gz` file and run the following R code:  
 
 ```R
 genotypes.beagle<-read.table('bamfiles.beagle.gz',header=T)
@@ -148,7 +159,10 @@ legend(x=0.3,y=1,col=c("red","blue","green",rep("black",2)),legend=c("Homozygote
 ```
 
 
-#Using NGSAdmix to estimate assignment and ancestry proportions
+# Using NGSAdmix to estimate assignment and ancestry proportions
+
+Back on the ACE HPC...  
+We will run NGSAdmix on the genotype likelihood file we generated previously.  
 
 ```bash
 NGSadmix -likes bamfiles.beagle.gz -K 3 -minMaf 0.05 -seed 1 -o bamfiles.ngsadmix.k3
@@ -171,16 +185,17 @@ cat bamfiles.ngsadmix.k3.log
 head -10 bamfiles.ngsadmix.k3.qopt
 ```
 
-#Plot ancestry propotions
-**Collect pre-prepared output file from Box**
-https://nih.box.com/s/e74fmhl38p379ykj8dqn2ynqe44j3ydb
-File names:
-_bamfiles.ngsadmix.k3.qopt_
-_bamfiles.popinfo.txt_
+# Plot ancestry propotions  
+**Collect pre-prepared output file from Box**  
+https://nih.box.com/s/e74fmhl38p379ykj8dqn2ynqe44j3ydb  
+File names:  
+_bamfiles.ngsadmix.k3.qopt_  
+_bamfiles.popinfo.txt_  
 
 
+Open RStudio, set the working directory to the directory with the downloaded files, and run the following R code:   
 
-# Plot inferred admixture proportions
+## Plot inferred admixture proportions
 ```R
 q<-read.table("bamfiles.ngsadmix.k3.qopt")
 pop<-read.table("bamfiles.popinfo.txt")$V1
@@ -197,18 +212,18 @@ barplot(t(q)[,ord], col=c("chocolate1","deepskyblue4","brown3"),
         cex.names=0.75,main="NGSAdmix K=3")
 ```
 
-#Estimating the best-fit K
-###100 individuals
-###50,000 sites
-Individuals are labeled by their geographic location / putative ancestry
-ASW	- HapMap African Americans from SW US
-CEU	- European individuals
-CHB	- Han Chinese in Beijing
-JPT	- Japanese individuals
-YRI	- Yoruba individuals from Nigeria
-MXL	- Mexican individuals from LA California
+## Estimating the best-fit K  
+#### 100 individuals  
+#### 50,000 sites  
+Individuals are labeled by their geographic location / putative ancestry  
+ASW	- HapMap African Americans from SW US  
+CEU	- European individuals  
+CHB	- Han Chinese in Beijing  
+JPT	- Japanese individuals  
+YRI	- Yoruba individuals from Nigeria  
+MXL	- Mexican individuals from LA California  
 
-Here is how the analysis was run,  
+Here is how the analysis was run,   
 but **no need to run it now**. It will take quite a long time:  
 
 ```bash
@@ -223,13 +238,14 @@ done
 done
 ```
 
-**Collect the files from Box**
-Link: https://nih.box.com/s/e74fmhl38p379ykj8dqn2ynqe44j3ydb
-File name: 100ind.tar.gz
+**Collect the files from Box**  
+Link: https://nih.box.com/s/e74fmhl38p379ykj8dqn2ynqe44j3ydb  
+File name: 100ind.tar.gz  
 
-Extract the files by double clicking or using the command line:  
+Extract the files by double clicking or using the command line:   
 `tar -xvzf 100ind.tar.gz`
 
+In RStudio --  
 
 ```R
 library(tidyverse)
