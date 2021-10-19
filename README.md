@@ -117,7 +117,7 @@ File name: `bamfiles.beagle.gz`
 
 Open RStudio, set the working directory to the directory with the `bamfiles.beagle.gz` file and run the following R code:  
 
-```RMarkdown
+```R
 genotypes.beagle<-read.table('bamfiles.beagle.gz',header=T)
 
 #get the counts of each genotype
@@ -196,7 +196,7 @@ _bamfiles.popinfo.txt_
 Open RStudio, set the working directory to the directory with the downloaded files, and run the following R code:   
 
 ### Plot inferred admixture proportions
-```RMarkdown
+```R
 q<-read.table("bamfiles.ngsadmix.k3.qopt")
 pop<-read.table("bamfiles.popinfo.txt")$V1
 # Plot them (ordered by population)
@@ -247,7 +247,7 @@ Extract the files by double clicking or using the command line:
 
 In RStudio --  
 
-```RMarkdown
+```R
 library(tidyverse)
 # create list of all input files
 files <- list.files(path="100ind",pattern='loglik',full.names=TRUE)
