@@ -117,7 +117,7 @@ File name: `bamfiles.beagle.gz`
 
 Open RStudio, set the working directory to the directory with the `bamfiles.beagle.gz` file and run the following R code:  
 
-```R
+```RMarkdown
 genotypes.beagle<-read.table('bamfiles.beagle.gz',header=T)
 
 #get the counts of each genotype
@@ -185,7 +185,7 @@ cat bamfiles.ngsadmix.k3.log
 head -10 bamfiles.ngsadmix.k3.qopt
 ```
 
-# Plot ancestry propotions  
+## Plot ancestry proportions  
 **Collect pre-prepared output file from Box**  
 https://nih.box.com/s/e74fmhl38p379ykj8dqn2ynqe44j3ydb  
 File names:  
@@ -195,8 +195,8 @@ _bamfiles.popinfo.txt_
 
 Open RStudio, set the working directory to the directory with the downloaded files, and run the following R code:   
 
-## Plot inferred admixture proportions
-```R
+### Plot inferred admixture proportions
+```RMarkdown
 q<-read.table("bamfiles.ngsadmix.k3.qopt")
 pop<-read.table("bamfiles.popinfo.txt")$V1
 # Plot them (ordered by population)
@@ -212,7 +212,7 @@ barplot(t(q)[,ord], col=c("chocolate1","deepskyblue4","brown3"),
         cex.names=0.75,main="NGSAdmix K=3")
 ```
 
-## Estimating the best-fit K  
+### Estimating the best-fit K  
 #### 100 individuals  
 #### 50,000 sites  
 Individuals are labeled by their geographic location / putative ancestry  
@@ -223,8 +223,8 @@ JPT	- Japanese individuals
 YRI	- Yoruba individuals from Nigeria  
 MXL	- Mexican individuals from LA California  
 
-Here is how the analysis was run,   
-but **no need to run it now**. It will take quite a long time:  
+Here is how the analysis was run, but **no need to run it now**.  
+It will take quite a long time:  
 
 ```bash
 for k in {1..15};
@@ -247,7 +247,7 @@ Extract the files by double clicking or using the command line:
 
 In RStudio --  
 
-```R
+```RMarkdown
 library(tidyverse)
 # create list of all input files
 files <- list.files(path="100ind",pattern='loglik',full.names=TRUE)
