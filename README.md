@@ -14,6 +14,8 @@ R code for making plots are embedded here and also available in [R_plots.R](R_pl
 
 The data are from the [1000 Genomes Project](https://www.internationalgenome.org/).
 
+Pre-prepared output files are available on Box [here](https://nih.app.box.com/folder/148223675491?s=e74fmhl38p379ykj8dqn2ynqe44j3ydb)  
+
 
 ### connect to ACE HPC and start an interactive session
 ```bash
