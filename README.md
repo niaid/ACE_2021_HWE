@@ -16,13 +16,16 @@ The data are from the [1000 Genomes Project](https://www.internationalgenome.org
 
 Pre-prepared output files are available on Box [here](https://nih.app.box.com/folder/148223675491?s=e74fmhl38p379ykj8dqn2ynqe44j3ydb)  
 
+Link to discussion questions [here](https://forms.office.com/g/PYS8prhQzd)
 
 ### connect to ACE HPC and start an interactive session
 ```bash
 ssh <username>@biocompace.ace.ac.ug
 srun --pty bash
 
-#load the ANGSD module
+#create variables that point to the ANGSD and NGSAdmix software locations
+ANGSD=/etc/ace-data/bcbb_teaching_files/HWE_Structure_Oct2021/software/angsd
+NGSADMIX=/etc/ace-data/bcbb_teaching_files/HWE_Structure_Oct2021/software/NGSadmix
 
 ```
 ### Process data
@@ -52,7 +55,7 @@ Create a population information file for later
 
 ```bash
 ## analyze all 30 individuals from the 3 putative ancestries
-angsd -bam bamfiles.txt -doHWE 1 -domajorminor 1 -GL 2 -doGlf 2 -doMaf 1 -SNP_pval 2e-6 -minMapQ 30 -minQ 20 -minInd 25 -minMaf 0.05 -out bamfiles
+$ANGSD -bam bamfiles.txt -doHWE 1 -domajorminor 1 -GL 2 -doGlf 2 -doMaf 1 -SNP_pval 2e-6 -minMapQ 30 -minQ 20 -minInd 25 -minMaf 0.05 -out bamfiles
 ```
 
 While that is running, let's look at the command flags
@@ -88,7 +91,7 @@ Does that mean all the other sites are in HWE?
 ```bash
 #make a like of bam files for JPT individuals
 ls -1 bamfiles/*JPT*.bam > JPT.files
-angsd -bam JPT.files -doHWE 1 -domajorminor 1 -GL 2 -doGlf 2 -doMaf 1 -SNP_pval 2e-6 -minMapQ 30 -minQ 20 -minInd 8 -minMaf 0.05 -out JPT
+$ANGSD -bam JPT.files -doHWE 1 -domajorminor 1 -GL 2 -doGlf 2 -doMaf 1 -SNP_pval 2e-6 -minMapQ 30 -minQ 20 -minInd 8 -minMaf 0.05 -out JPT
 gunzip -c  JPT.hwe.gz | wc -l
 gunzip -c JPT.hwe.gz | awk '{if($9<0.05) total+=1}END{print total}'
 ```
@@ -166,7 +169,7 @@ Back on the ACE HPC...
 We will run NGSAdmix on the genotype likelihood file we generated previously.  
 
 ```bash
-NGSadmix -likes bamfiles.beagle.gz -K 3 -minMaf 0.05 -seed 1 -o bamfiles.ngsadmix.k3
+$NGSADMIX -likes bamfiles.beagle.gz -K 3 -minMaf 0.05 -seed 1 -o bamfiles.ngsadmix.k3
 ```
 
 Explanation of the command flags
@@ -233,7 +236,7 @@ for k in {1..15};
 do
 for rep in {1..10};
 do
-NGSadmix -likes 100ind.GL.gz -K $k -minMaf 0.05 -seed $RANDOM -o 100ind.ngsadmix.k${k}.rep${rep} -P 16
+$NGSADMIX -likes 100ind.GL.gz -K $k -minMaf 0.05 -seed $RANDOM -o 100ind.ngsadmix.k${k}.rep${rep} -P 16
 #capture likelihood
 grep 'best like' 100ind.ngsadmix.k${k}.rep${rep}.log | cut -d '=' -f 2 | cut -d ' ' -f 1 > 100ind.ngsadmix.k${k}.rep${rep}.loglik
 done
