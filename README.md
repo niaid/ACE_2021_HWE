@@ -72,7 +72,7 @@ While that is running, let's look at the command flags
 ### Inspect the output files
 ```bash
 #view first few rows
-gunzip -c bamfiles.hwe.gz | head
+gunzip -c bamfiles.hwe.gz | head | column -t
 #count the total number of SNPs
 gunzip -c bamfiles.hwe.gz | wc -l
 #count the number of sites with HWE p-value < 0.05
@@ -181,7 +181,7 @@ View the output files
 #log file
 cat bamfiles.ngsadmix.k3.log
 #ancestry proportions
-head -10 bamfiles.ngsadmix.k3.qopt
+head -10 bamfiles.ngsadmix.k3.qopt | column -t
 ```
 
 ## Plot ancestry proportions  
