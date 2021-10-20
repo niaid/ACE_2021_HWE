@@ -86,9 +86,9 @@ Does that mean all the other sites are in HWE?
 ```bash
 #make a like of bam files for JPT individuals
 ls -1 bamfiles/*JPT*.bam > JPT.files
-angsd -bam JPT.files  -doHWE 1 -domajorminor 1 -GL 1 -doMaf 1 -SNP_pval 1e-6 -out JPT.HWE -minMapQ 30 -minQ 20 -minInd 8 -minMaf 0.05
-gunzip -c  JPT.HWE.hwe.gz | wc -l
-gunzip -c JPT.HWE.hwe.gz | awk '{if($9<0.05) total+=1}END{print total}'
+angsd -bam JPT.files -doHWE 1 -domajorminor 1 -GL 2 -doGlf 2 -doMaf 1 -SNP_pval 2e-6 -minMapQ 30 -minQ 20 -minInd 8 -minMaf 0.05 -out JPT
+gunzip -c  JPT.hwe.gz | wc -l
+gunzip -c JPT.hwe.gz | awk '{if($9<0.05) total+=1}END{print total}'
 ```
 What proportion of sites are not in Hardy-Weinberg Equilibrium?
 
