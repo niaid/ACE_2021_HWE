@@ -112,9 +112,6 @@ Explanation of the beagle genotype likelihood file
  https://gcbias.org/2011/10/13/population-genetics-course-resources-hardy-weinberg-eq/
 
 **Collect the beagle genotype likelihood file we generated in the above exercise:**  
-Box link:  
-https://nih.box.com/s/e74fmhl38p379ykj8dqn2ynqe44j3ydb
-
 File name: `bamfiles.beagle.gz`
 
 Open RStudio, set the working directory to the directory with the `bamfiles.beagle.gz` file and run the following R code:  
@@ -188,8 +185,7 @@ head -10 bamfiles.ngsadmix.k3.qopt | column -t
 ```
 
 ## Plot ancestry proportions  
-**Collect pre-prepared output file from Box**  
-https://nih.box.com/s/e74fmhl38p379ykj8dqn2ynqe44j3ydb  
+**Collect pre-prepared output files**  
 File names:  
 _bamfiles.ngsadmix.k3.qopt_  
 _bamfiles.popinfo.txt_  
@@ -241,8 +237,7 @@ done
 done
 ```
 
-**Collect the files from Box**  
-Link: https://nih.box.com/s/e74fmhl38p379ykj8dqn2ynqe44j3ydb  
+**Collect the files from Github**   
 File name: 100ind.tar.gz  
 
 Extract the files by double clicking or using the command line:   
