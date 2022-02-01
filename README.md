@@ -1,4 +1,5 @@
 # Analyzing population genomic data with ANGSD  
+**updated Feb. 2022**
 This repository contains practical training material as part of the ACE bioinformatics program. This lesson focuses on exploring Hardy-Weinberg Equilibrium and performing population structure inference and population assignment from Next-Generation Sequencing data.
 
 *author*: David B. Stern, Ph.D.  
@@ -14,8 +15,6 @@ R code for making plots are embedded here and also available in [R_plots.R](R_pl
 The data are from the [1000 Genomes Project](https://www.internationalgenome.org/).
 
 Pre-prepared output files are available on in this Github repo (download with `git clone https://github.com/niaid/ACE_2021_HWE/`)
-
-Link to discussion questions [here](https://forms.office.com/g/PYS8prhQzd)
 
 ### connect to ACE HPC and start an interactive session
 ```bash
