@@ -1,5 +1,6 @@
 # Analyzing population genomic data with ANGSD  
 **updated Feb. 2022**
+
 This repository contains practical training material as part of the ACE bioinformatics program. This lesson focuses on exploring Hardy-Weinberg Equilibrium and performing population structure inference and population assignment from Next-Generation Sequencing data.
 
 *author*: David B. Stern, Ph.D.  
