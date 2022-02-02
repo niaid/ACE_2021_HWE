@@ -28,13 +28,13 @@ ssh <username>@biocompace.ace.ac.ug
 ssh <nodename>
 
 #create variables that point to the ANGSD and NGSAdmix software locations
-ANGSD=/etc/ace-data/bcbb_teaching_files/HWE_Structure_Oct2021/software/angsd
-NGSADMIX=/etc/ace-data/bcbb_teaching_files/HWE_Structure_Oct2021/software/NGSadmix
+ANGSD=/etc/ace-data/bcbb_teaching_files/HWE_Structure/software/angsd
+NGSADMIX=/etc/ace-data/bcbb_teaching_files/HWE_Structure/software/NGSadmix
 
 #Copy the data from the shared directory to your directory.  
 mkdir angsd_tutorial #make a working directory
 cd angsd_tutorial #change to that directory
-cp /etc/ace-data/bcbb_teaching_files/HWE_Structure_Oct2021/bamfiles.tar.gz . #copy the data to this directory
+cp /etc/ace-data/bcbb_teaching_files/HWE_Structure/bamfiles.tar.gz . #copy the data to this directory
 tar -xvzf bamfiles.tar.gz #extract the files. This should create a directory called bamfiles
 ```
 
