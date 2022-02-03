@@ -1,6 +1,6 @@
 library(tidyverse)
 
-###### HWE excersize #####
+###### HWE exercise #####
 # Plot genotype vs allele frequencies along with the HWE expectations
 # Adapted from https://gcbias.org/2011/10/13/population-genetics-course-resources-hardy-weinberg-eq/
 
@@ -44,7 +44,7 @@ lines(x,(1-x)^2,lty=2) #homozygous aa
 legend(x=0.3,y=1,col=c("red","blue","green",rep("black",2)),legend=c("Homozygote AA","Homozygote aa","Heterozygote Aa","Mean","Hardy Weinberg Expectation"),pch=c(rep(1,3),rep(NA,2)),lty=c(rep(NA,3),1,2))
 
 
-######### NGSAdmix excersize ###########
+######### NGSAdmix exercise ###########
 
 ######### Plot inferred admixture proportions for a single run of K=3
 q<-read.table("bamfiles.ngsadmix.k3.qopt")
