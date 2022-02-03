@@ -110,6 +110,13 @@ gunzip -c JPT.hwe.gz | awk '{if($9<0.05) total+=1}END{print total}'
 ```
 What proportion of sites are not in Hardy-Weinberg Equilibrium?
 
+**When analyzing individuals from one ‘population’, why were there fewer sites that failed the HWE test?** 
+
+**People do not mate at random. Why are most sites still in HWE?**  
+Answer: Hardy-Weinberg is quite robust. It only takes one generation of random mating to return to HWE. Even though individuals do not mate at random, they do mate at random with respect to their genotype at most of the loci in the genome. 
+
+
+
 ### View the genotype likelihood file
 ```bash
 gunzip -c bamfiles.beagle.gz | head -n 10 | cut -f 1-10 | column -t
